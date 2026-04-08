@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Lista de la compra interactiva</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <h1>Mi lista de la compra</h1>
+
+        <div class="entrada">
+            <input
+                type="text"
+                id="nuevoProducto"
+                placeholder="Añade un producto..."
+            />
+            <button class="sombraBoton" id="btnAgregar">Añadir</button>
+        </div>
+        <div class="contenedorBotonesFiltro">
+            <button id="btnFiltroTodos" class="sombraBoton filtroActivo">
+                Todos
+            </button>
+            <button id="btnFiltroPendientes" class="sombraBoton">
+                Pendientes
+            </button>
+            <button id="btnFiltroComprados" class="sombraBoton">
+                Comprados
+            </button>
+        </div>
+        <ul id="listaCompras"></ul>
+        <p id="resumen">0 productos (0 pendientes)</p>
+
+
+        
+        <script src="script.js"> </script>
+    </body>
+</html>
