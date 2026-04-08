@@ -52,11 +52,11 @@ button {
 #btnAgregar:hover {
     background: #219a52;
 }
-ul {
-    list-style: none;
+.contenedorListaCompras{
+    margin-top: 2rem;
     padding: 0;
 }
-li {
+.producto {
     display: flex;
     align-items: center;
     padding: 12px;
@@ -64,12 +64,14 @@ li {
     background: #f8f9fa;
     border-radius: 6px;
     gap: 12px;
+
+    cursor: move;
 }
-li.comprado .nombre-producto {
+.producto.comprado .nombre-producto {
     text-decoration: line-through;
     color: #999;
 }
-li.comprado {
+.producto.comprado {
     background: #e8f5e9;
 }
 .nombre-producto {
@@ -118,9 +120,10 @@ li.comprado {
     margin-top: 1, 5rem;
     margin-bottom: 1, 5rem;
 }
-/* .contenedorBotonesFiltro button {
-                /* border: 2px,solid, rgba(255, 255, 255, 0);  
-            } */
+.contenedorBotonesFiltro button {
+    /* border: 2px, solid, rgba(255, 255, 255, 0); */
+    flex: 1;
+}
 #btnFiltroTodos {
     background-color: #838383;
 }
@@ -134,6 +137,8 @@ li.comprado {
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
     border: 3px, solid, rgb(0, 0, 0);
 }
+
+
 
 /* MÓVIL */
 @media (max-width: 599px) {

@@ -1,6 +1,6 @@
 const nuevoProductoInput = document.querySelector("#nuevoProducto");
 const btnAgregar = document.querySelector("#btnAgregar");
-const listaComprasUL = document.querySelector("#listaCompras");
+const listaComprasContenedor = document.querySelector("#listaCompras");
 const resumen = document.querySelector("#resumen");
 
 const btnFiltroTodos = document.getElementById("btnFiltroTodos");
@@ -31,11 +31,10 @@ function AgregarProducto(nombre) {
 }
 
 function RenderizarLista() {
-    listaComprasUL.innerHTML = "";
+    listaComprasContenedor.innerHTML = "";
     let productosPendientes = 0;
     listaCompras.forEach((producto, index) => {
         //Filtros de salida temprana
-        //Filtro pendientes
         if (filtroPendientesActivado && producto.comprado == true) {
             return;
         }
@@ -43,10 +42,11 @@ function RenderizarLista() {
             return;
         }
 
-        let nuevoLi = document.createElement("li");
+        let div = document.createElement("div");
+        div.classList.add("producto");
 
         if (producto.comprado === true) {
-            nuevoLi.classList.add("comprado");
+            div.classList.add("comprado");
         } else {
             productosPendientes++;
         }
@@ -56,22 +56,28 @@ function RenderizarLista() {
         botonChek.textContent = "Check";
         botonChek.classList.add("btn-check");
         botonChek.addEventListener("click", () => ToggleComprado(index));
-        nuevoLi.appendChild(botonChek);
+        div.appendChild(botonChek);
 
         //TEXTO PRODUCTO
         let nuevoSpan = document.createElement("span");
         nuevoSpan.classList.add("nombre-producto");
         nuevoSpan.textContent = producto.nombre;
-        nuevoLi.appendChild(nuevoSpan);
+        div.appendChild(nuevoSpan);
 
         //BOTON ELIMINAR
         let botonEliminar = document.createElement("button");
         botonEliminar.textContent = "X";
         botonEliminar.classList.add("btn-eliminar");
         botonEliminar.addEventListener("click", () => EliminarProducto(index));
-        nuevoLi.appendChild(botonEliminar);
+        div.appendChild(botonEliminar);
 
-        listaComprasUL.appendChild(nuevoLi);
+        //let nuevoDiv = document.createElement("div");
+        div.setAttribute("draggable", "true");
+        div.classList.add("contenedorProducto");
+
+        //Li < Div < Ul
+        //nuevoDiv.appendChild(nuevoLi)
+        listaComprasContenedor.appendChild(div);
     });
 
     resumen.textContent = `${listaCompras.length} productos (${productosPendientes} pendientes)`;
@@ -127,6 +133,26 @@ btnFiltroComprados.addEventListener("click", () => {
     filtroPendientesActivado = false;
     filtroCompradosActivado = true;
     RenderizarLista();
+});
+
+//DRAG AND DROP
+//Array con los objetos div
+let listaProductosDiv = document.querySelectorAll(".producto");
+listaProductosDiv.forEach((div) => {
+    div.caja.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("text/plain", e.target.id);
+    });
+});
+
+listaComprasContenedor.addEventListener("dragover", (e) => {
+    e.preventDefault();
+});
+
+listaComprasContenedor.addEventListener("drop", (e) => {
+  e.preventDefault();
+  const id = e.dataTransfer.getData("text/plain");
+  const elemento = document.getElementById(id);
+  lis.appendChild(elemento);
 });
 
 // TODO: Función toggleComprado(indice)
